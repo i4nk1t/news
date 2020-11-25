@@ -1,17 +1,22 @@
+//  Main classed based conmponent for redering the page 
+
 import React, { Component } from 'react'
 import {get_searchData, get_topStories} from '../apis/newsapi'
 import NewsList from './NewsList'
 import MainNews from './MainNews'
 import SearchBar from './SearchBar'
+import CategoryList from './CategoryList'
 
 
 class News extends Component {
 
  
 
-    
+    // State declerations
         state = {
         articles: [],
+        selectedArticle: null,
+        // Categories listed as state
         categories: [
             {
             cat:'Sports'
@@ -34,16 +39,20 @@ class News extends Component {
             {
                 cat:'Animals'
             }
-        ]
+        ],
+        selectedCategory: ''
        
      }
 
+    //  Initializing the states
     componentDidMount = async () => {
         const res = await get_topStories()      
         this.setState({articles: res})
-        console.log(this.state.articles[0])
-    }
+        this.setState({selectedArticle: res[0]})
+        this.setState({selectedCategory: this.state.categories[0].cat})
+            }
 
+            // Function for search and categories
     onTermSubmit = async (term) => {
         console.log("We are trying to search for", term)
         const response = await get_searchData(term)
@@ -54,26 +63,22 @@ class News extends Component {
         })
 }
 
+// Function used for selecting the article
+onArticleSelect = (article) => {
+    this.setState({
+        selectedArticle: article
+    })
+}
+
+// Checking the state changes
 componentDidUpdate = (prevState) => {
     if(prevState !== this.state){
         return this.state
     }
+    else
+    return prevState
 
 }
-
-renderedCategory =  this.state.categories.map((category) =>
-{
-      return(
-
-        <div className="ui divided selection list">
-            
-            <button className="ui basic secondary button" onClick={this.onTermSubmit(category.cat)}
-            >
-                {category.cat}
-            </button>
-    </div>
-    )
-})
 
 
 
@@ -85,13 +90,16 @@ render(){
         <div className="ui row">
         <div className="three wide column">
             <h4>Categories</h4>
-              {this.renderedCategory}
+              <CategoryList 
+                                        onCategorySelect={this.onTermSubmit} 
+                                        categories={this.state.categories} />
                   </div>
             <div className="nine wide column">
-            <MainNews article={this.state.articles[0]} />
+            <MainNews article={this.state.selectedArticle} />
                 </div>
             <div className="four wide column">
-                <NewsList articles={this.state.articles} />
+                <NewsList onArticleSelect={this.onArticleSelect} 
+                                    articles={this.state.articles} />
             </div>
         </div>
     </div>

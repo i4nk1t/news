@@ -1,3 +1,5 @@
+// For news in the center of the screen , the main detailed news
+
 import React from 'react';
 
 const MainNews = ({ article }) => {
@@ -14,9 +16,9 @@ const MainNews = ({ article }) => {
       return (
         <div>
             <div className="ui embed">
-                <iframe title="news image" src={article.urlToImage} />
+                <img className="ui image" alt={article.title} title="news image" src={article.urlToImage} />
             </div>
-            <div className="ui segment link">
+            <div className="ui segment">
                 <a href={article.url}><h3 className="ui header">{article.title}</h3></a>
                 <h4><p>{article.description}</p></h4>
     <p>{article.content}</p>

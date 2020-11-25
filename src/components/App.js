@@ -5,7 +5,7 @@ class App extends React.Component{
     render(){
         return (
             <div>
-      <div style={{text_align: "center"}}>
+      <div className="ui center aligned container">
           <h1>News</h1>
       </div>
       <div>

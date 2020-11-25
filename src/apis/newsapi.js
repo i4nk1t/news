@@ -1,7 +1,6 @@
 import axios from 'axios';
 
-// const key = 'e357622f1f7d4c1d9492f992e9b266bf'
-const key = 'c334fa4fb459474281a7e91c41ef37c5'
+const key = 'a5f589146a274fd3b3724730e456cc57'
 
 const get_topStories = () => {
 
